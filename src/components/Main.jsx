@@ -25,7 +25,7 @@ function Main() {
         </span>{' '}
         입니다.
       </StPContents>
-      <img src={mainIcon} />
+      <img className="mainArrow" src={mainIcon} />
     </StSection>
   );
 }
@@ -42,9 +42,8 @@ export const StSection = styled.section`
   overflow: hidden;
   box-sizing: border-box;
   padding-bottom: ${(props) => props.paddingbottom};
-  animation: mainGradation 10s infinite;
+  animation: ${(props) => props.animation || 'mainGradation 10s infinite'};
   background-attachment: fixed;
-  background-position: bottom;
   @keyframes mainGradation {
     0% {
       background-color: #20c1e0;
@@ -66,7 +65,7 @@ export const StSection = styled.section`
     background-repeat: no-repeat;
     text-indent: -9999px;
   }
-  & img {
+  & .mainArrow {
     position: absolute;
     width: 20px;
     animation: mainAnimation 1s infinite;
