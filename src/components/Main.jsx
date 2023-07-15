@@ -5,7 +5,7 @@ import mainIcon from '../images/main_icon.svg';
 
 function Main() {
   return (
-    <StSection background="var(--main-color)">
+    <StSection background="var(--main-color)" paddingbottom="80px">
       <h1>푸른 바다 거북이</h1>
       <StPTitle>
         안녕하세요 저희는 '푸른 바다 거북이'라는 멸종위기 해양동물
@@ -31,7 +31,7 @@ function Main() {
 }
 
 export default Main;
-const StSection = styled.section`
+export const StSection = styled.section`
   position: relative;
   background: ${(props) => props.background};
   height: 930px;
@@ -41,8 +41,10 @@ const StSection = styled.section`
   align-items: center;
   overflow: hidden;
   box-sizing: border-box;
-  padding-bottom: 80px;
+  padding-bottom: ${(props) => props.paddingbottom};
   animation: mainGradation 10s infinite;
+  background-attachment: fixed;
+  background-position: bottom;
   @keyframes mainGradation {
     0% {
       background-color: #20c1e0;
@@ -79,11 +81,11 @@ const StSection = styled.section`
   }
 `;
 
-const StPTitle = styled.p`
+export const StPTitle = styled.p`
   font-size: 36px;
   margin-bottom: 40px;
 `;
-const StPContents = styled.p`
+export const StPContents = styled.p`
   font-size: 18px;
   line-height: 2.5;
   text-align: center;
