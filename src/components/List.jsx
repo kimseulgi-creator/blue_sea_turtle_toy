@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from 'styled-components';
 import listBackground from '../images/post_background.png';
 import { StPContents, StPTitle, StSection } from './Main';
+import Modal from './Modal';
 
 function List() {
   return (
@@ -11,7 +12,7 @@ function List() {
         해양동물을 위해 스스로 어떤 노력을 할 수 있을지 적어봅시다.
       </StPContents>
       <StPEtc>( post 하나 당 해양 동물에게 500원씩 기부가 됩니다. )</StPEtc>
-      <StButton>POST</StButton>
+      <Modal />
       <StCardWrap>
         <StPostCard>a</StPostCard>
         <StPostCard>b</StPostCard>
@@ -58,39 +59,4 @@ const StPostCard = styled.div`
 
 const StPEtc = styled.p`
   font-weight: 300;
-`;
-
-const StButton = styled.button`
-  margin: 60px 0;
-  width: 170px;
-  height: 35px;
-  border-radius: 20px;
-  background-color: #fff;
-  color: var(--main-color);
-  font-weight: 700;
-  box-shadow: 5px 5px 10px 0 #00000032;
-  transition: all 1s;
-  &:hover {
-    /* background-color: #20c1e0; */
-    animation: mainGradation 5s infinite;
-    @keyframes mainGradation {
-      0% {
-        background-color: #fff;
-      }
-      25% {
-        background-color: #20c1e0;
-      }
-      50% {
-        background-color: #2083e0;
-        color: #fff;
-      }
-      25% {
-        background-color: #20c1e0;
-      }
-      100% {
-        background-color: #ffffff;
-        color: var(--main-color);
-      }
-    }
-  }
 `;
