@@ -2,9 +2,26 @@ import React from 'react';
 import { styled } from 'styled-components';
 import listBackground from '../images/post_background.png';
 import { StPContents, StPTitle, StSection } from './Main';
-import Modal from './Modal';
+import Modal, { StModalbutton, StWrapButton } from './Modal';
+import { QueryClient, useMutation, useQuery } from 'react-query';
+import { getPost } from '../api/post';
 
-function List() {
+function List({ isActive }) {
+  const queryClient = new QueryClient();
+  const { isLoading, isError, data } = useQuery('post', getPost);
+  // const mutaion = useMutation(getPost, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries('post');
+  //   },
+  // });
+
+  if (isLoading) {
+    return <p>로딩중입니다...!</p>;
+  }
+  if (isError) {
+    return <p>오류가 발생하였습니다...!</p>;
+  }
+  console.log(data);
   return (
     <StSection background={`url(${listBackground})`}>
       <StPTitle as={'h2'}>Post를 작성해서 해양동물들을 도와주세요.</StPTitle>
@@ -14,11 +31,23 @@ function List() {
       <StPEtc>( post 하나 당 해양 동물에게 500원씩 기부가 됩니다. )</StPEtc>
       <Modal />
       <StCardWrap>
-        <StPostCard>a</StPostCard>
-        <StPostCard>b</StPostCard>
-        <StPostCard>c</StPostCard>
-        <StPostCard>d</StPostCard>
-        <StPostCard>e</StPostCard>
+        {data.map((post) => {
+          return (
+            <StPostCard key={post.id} isActive={isActive}>
+              <p>{post.contents}</p>
+              <StWrapButton>
+                <StModalbutton
+                  width="125px"
+                  backgroundcolor="#ffffffab"
+                  border="1px solid var(--main-color)"
+                  color="var(--main-color)"
+                >
+                  삭제
+                </StModalbutton>
+              </StWrapButton>
+            </StPostCard>
+          );
+        })}
       </StCardWrap>
     </StSection>
   );
@@ -54,7 +83,13 @@ const StPostCard = styled.div`
   background-color: #ffffffad;
   flex: 0 0 355px;
   margin-right: 60px;
+  padding: 30px;
+  box-sizing: border-box;
   box-shadow: 5px 5px 10px 0 #00000032;
+  & p {
+    height: 218px;
+    margin-bottom: 30px;
+  }
 `;
 
 const StPEtc = styled.p`

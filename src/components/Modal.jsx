@@ -1,9 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
+import useInput from '../hooks/useInput';
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from 'react-query';
+import { addPost, getPost } from '../api/post';
+import shortid from 'shortid';
 
 function Modal() {
   const modalRef = useRef();
+  const [password, onChangePassword] = useInput(0);
+  const [contents, onChangeContents] = useInput('');
   const [isOpen, setIsOpen] = useState(false);
+  const { isLoading, isError, data } = useQuery('post', getPost);
+
+  const queryClient = useQueryClient();
+  const mutaion = useMutation(addPost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('post');
+    },
+  });
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -21,22 +41,44 @@ function Modal() {
       document.removeEventListener('mousedown', clickOutside);
     };
   }, []);
+
+  const postHandler = () => {
+    mutaion.mutate({ id: shortid(), password, contents });
+    setIsOpen(false);
+  };
+
+  if (isLoading) {
+    return <p>로딩중입니다...!</p>;
+  }
+  if (isError) {
+    return <p>오류가 발생하였습니다...!</p>;
+  }
   return (
     <div>
       <StButton onClick={openModal}>POST</StButton>
       {isOpen && (
         <StModal ref={modalRef}>
-          <StModalContents>
+          <StModalContents
+            onSubmit={function (e) {
+              e.preventDefault();
+            }}
+          >
             <input
               type="password"
               placeholder="비밀번호 4자리를 입력해주세요"
               maxLength="4"
               minLength="4"
+              value={password || ''}
+              onChange={onChangePassword}
             />
-            <textarea placeholder="해양동물을 위해 스스로 어떤 노력을 할 수 있을지 적어봅시다."></textarea>
+            <textarea
+              placeholder="해양동물을 위해 스스로 어떤 노력을 할 수 있을지 적어봅시다."
+              value={contents}
+              onChange={onChangeContents}
+            ></textarea>
             <StWrapButton>
-              <button onClick={closeModal}>POST</button>
-              <button onClick={closeModal}>닫기</button>
+              <StModalbutton onClick={() => postHandler()}>POST</StModalbutton>
+              <StModalbutton onClick={closeModal}>닫기</StModalbutton>
             </StWrapButton>
           </StModalContents>
         </StModal>
@@ -54,7 +96,7 @@ const StModal = styled.div`
   left: 0;
   top: 0;
 `;
-const StModalContents = styled.div`
+const StModalContents = styled.form`
   background-color: #fff;
   position: absolute;
   width: 450px;
@@ -96,21 +138,28 @@ const StModalContents = styled.div`
     }
   }
 `;
-const StWrapButton = styled.div`
+export const StWrapButton = styled.div`
   display: flex;
   justify-content: space-between;
-  & button {
-    height: 32px;
-    width: 150px;
-    border-radius: 20px;
+`;
+
+export const StModalbutton = styled.button`
+  height: 32px;
+  width: ${(props) => props.width || '150px'};
+  border-radius: 20px;
+  background-color: ${(props) => props.backgroundcolor || 'var(--main-color)'};
+  border: ${(props) => props.border};
+  color: ${(props) => props.color};
+  box-shadow: 1px 1px 5px 0 #99969673;
+  transition: all 1s;
+  margin: 0 auto;
+  &:hover {
     background-color: var(--main-color);
-    box-shadow: 1px 1px 5px 0 #99969673;
-    transition: all 1s;
-    &:hover {
-      background-color: #0036cd;
-    }
+    border: none;
+    color: #fff;
   }
 `;
+
 const StButton = styled.button`
   margin: 60px 0;
   width: 170px;
