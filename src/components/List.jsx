@@ -4,24 +4,33 @@ import listBackground from '../images/post_background.png';
 import { StPContents, StPTitle, StSection } from './Main';
 import Modal, { StModalbutton, StWrapButton } from './Modal';
 import { QueryClient, useMutation, useQuery } from 'react-query';
-import { getPost } from '../api/post';
+import { deletePost, getPost } from '../api/post';
 
 function List({ isActive }) {
   const queryClient = new QueryClient();
+  const mutation = useMutation(deletePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('post');
+    },
+  });
   const { isLoading, isError, data } = useQuery('post', getPost);
-  // const mutaion = useMutation(getPost, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries('post');
-  //   },
-  // });
-
   if (isLoading) {
     return <p>로딩중입니다...!</p>;
   }
   if (isError) {
     return <p>오류가 발생하였습니다...!</p>;
   }
-  console.log(data);
+
+  const deleteHandler = (id) => {
+    const deletePost = data.filter((post) => post.id === id);
+    const checkPassword = prompt('비밀번호를 입력해주세요.');
+    if (checkPassword === deletePost[0].password) {
+      mutation.mutate(id);
+    } else {
+      alert('비밀번호가 틀렸습니다.');
+    }
+  };
+
   return (
     <StSection background={`url(${listBackground})`}>
       <StPTitle as={'h2'}>Post를 작성해서 해양동물들을 도와주세요.</StPTitle>
@@ -41,6 +50,9 @@ function List({ isActive }) {
                   backgroundcolor="#ffffffab"
                   border="1px solid var(--main-color)"
                   color="var(--main-color)"
+                  onClick={() => {
+                    deleteHandler(post.id);
+                  }}
                 >
                   삭제
                 </StModalbutton>
