@@ -30,7 +30,7 @@ const List = forwardRef(({ isActive }, ref) => {
       alert('비밀번호가 틀렸습니다.');
     }
   };
-
+  console.log(data);
   return (
     <StSection
       ref={(listRef) => (ref.current[1] = listRef)}
