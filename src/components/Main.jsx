@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { styled } from 'styled-components';
 import logo from '../images/blue_sea_turtle_logo.png';
 import mainIcon from '../images/main_icon.svg';
 
-function Main() {
+const Main = forwardRef((props, ref) => {
   return (
-    <StSection background="var(--main-color)" paddingbottom="80px">
+    <StSection
+      ref={(mainRef) => (ref.current[0] = mainRef)}
+      background="var(--main-color)"
+      paddingbottom="80px"
+    >
       <h1>푸른 바다 거북이</h1>
       <StPTitle>
         안녕하세요 저희는 '푸른 바다 거북이'라는 멸종위기 해양동물
@@ -25,10 +29,10 @@ function Main() {
         </span>{' '}
         입니다.
       </StPContents>
-      <img className="mainArrow" src={mainIcon} />
+      <img className="mainArrow" src={mainIcon} alt="" />
     </StSection>
   );
-}
+});
 
 export default Main;
 export const StSection = styled.section`

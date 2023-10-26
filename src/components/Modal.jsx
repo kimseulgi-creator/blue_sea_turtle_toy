@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import useInput from '../hooks/useInput';
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from 'react-query';
-import { addPost, getPost } from '../api/post';
+import { useMutation, useQueryClient } from 'react-query';
+import { addPost } from '../api/post';
 import shortid from 'shortid';
 
 function Modal() {
@@ -15,7 +10,6 @@ function Modal() {
   const [password, onChangePassword] = useInput(0);
   const [contents, onChangeContents] = useInput('');
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoading, isError, data } = useQuery('post', getPost);
 
   const queryClient = useQueryClient();
   const mutaion = useMutation(addPost, {
@@ -47,12 +41,6 @@ function Modal() {
     setIsOpen(false);
   };
 
-  if (isLoading) {
-    return <p>로딩중입니다...!</p>;
-  }
-  if (isError) {
-    return <p>오류가 발생하였습니다...!</p>;
-  }
   return (
     <div>
       <StButton onClick={openModal}>POST</StButton>
@@ -171,7 +159,6 @@ const StButton = styled.button`
   box-shadow: 5px 5px 10px 0 #00000032;
   transition: all 1s;
   &:hover {
-    /* background-color: #20c1e0; */
     animation: mainGradation 5s infinite;
     @keyframes mainGradation {
       0% {

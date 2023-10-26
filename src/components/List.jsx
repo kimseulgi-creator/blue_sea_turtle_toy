@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { styled } from 'styled-components';
 import listBackground from '../images/post_background.png';
 import { StPContents, StPTitle, StSection } from './Main';
@@ -6,7 +6,7 @@ import Modal, { StModalbutton, StWrapButton } from './Modal';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { deletePost, getPost } from '../api/post';
 
-function List({ isActive }) {
+const List = forwardRef(({ isActive }, ref) => {
   const queryClient = new QueryClient();
   const mutation = useMutation(deletePost, {
     onSuccess: () => {
@@ -32,7 +32,10 @@ function List({ isActive }) {
   };
 
   return (
-    <StSection background={`url(${listBackground})`}>
+    <StSection
+      ref={(listRef) => (ref.current[1] = listRef)}
+      background={`url(${listBackground})`}
+    >
       <StPTitle as={'h2'}>Post를 작성해서 해양동물들을 도와주세요.</StPTitle>
       <StPContents>
         해양동물을 위해 스스로 어떤 노력을 할 수 있을지 적어봅시다.
@@ -40,36 +43,34 @@ function List({ isActive }) {
       <StPEtc>( post 하나 당 해양 동물에게 500원씩 기부가 됩니다. )</StPEtc>
       <Modal />
       <StCardWrap>
-        {data.map((post) => {
-          return (
-            <StPostCard key={post.id} isActive={isActive}>
-              <p>{post.contents}</p>
-              <StWrapButton>
-                <StModalbutton
-                  width="125px"
-                  backgroundcolor="#ffffffab"
-                  border="1px solid var(--main-color)"
-                  color="var(--main-color)"
-                  onClick={() => {
-                    deleteHandler(post.id);
-                  }}
-                >
-                  삭제
-                </StModalbutton>
-              </StWrapButton>
-            </StPostCard>
-          );
-        })}
+        {data
+          .map((post) => {
+            return (
+              <StPostCard key={post.id} isActive={isActive}>
+                <p>{post.contents}</p>
+                <StWrapButton>
+                  <StModalbutton
+                    width="125px"
+                    backgroundcolor="#ffffffab"
+                    border="1px solid var(--main-color)"
+                    color="var(--main-color)"
+                    onClick={() => {
+                      deleteHandler(post.id);
+                    }}
+                  >
+                    삭제
+                  </StModalbutton>
+                </StWrapButton>
+              </StPostCard>
+            );
+          })
+          .reverse()}
       </StCardWrap>
     </StSection>
   );
-}
+});
 
 export default List;
-// const Stsection = styled.section`
-//   background: ${(props) => props.background};
-//   height: 930px;
-// `;
 
 const StCardWrap = styled.div`
   display: flex;
