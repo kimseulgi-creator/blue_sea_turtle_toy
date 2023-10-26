@@ -44,7 +44,7 @@ const List = forwardRef(({ isActive }, ref) => {
       <Modal />
       <StCardWrap>
         {data
-          .map((post) => {
+          ?.map((post) => {
             return (
               <StPostCard key={post.id} isActive={isActive}>
                 <p>{post.contents}</p>
