@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# 푸른 바다 거북이
+![blue-sea-turtle2](https://github.com/kimseulgi-creator/blue_sea_turtle_toy/assets/78592995/aa0b5752-b95f-484a-82eb-11330631cbb9)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+형설지공 study 토이프로젝트 23.07.15 - 23.07.27
 
-## Available Scripts
+<br>
 
-In the project directory, you can run:
+## 목차
 
-### `yarn start`
+1. [프로젝트 소개](#프로젝트-소개)
+2. [구현기능 및 기술스택](#구현기능)
+3. [배포주소/Figma주소](#배포주소/Figma주소)
+4. [API Table](#api-table)
+5. [프로젝트 시연 영상](#프로젝트-시연-영상)
+<br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 프로젝트 소개
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+*‘ 해양동물들을 도와줘 🐢 ’*
 
-### `yarn test`
+멸종위기 해양동물들을 위한 자선단체기부 플랫폼입니다. <br />
+사용자가 해양동물을 위해 스스로 어떤 노력을 할 수 있을지 post 하면 500원씩 해양동물 자선단체에 기부가 됩니다!
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br>
 
-### `yarn build`
+## 구현기능
+- 게시글 post/delete
+- 게시글 작성 시 비밀번호 받기 ⇒ 삭제 시 비밀번호 입력받고 확인
+- side 메뉴 버튼 클릭시 자동 스크롤 구현
+- UI 구현
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 기술스택
+<div>
+	<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
+	<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/>
+	<img src="https://img.shields.io/badge/redux-764ABC?style=flat&logo=redux&logoColor=white"/>
+	<img src="https://img.shields.io/badge/axios-5A29E4?style=flat&logo=axios&logoColor=white" />
+	<img src="https://img.shields.io/badge/reactquery-FF4154?style=flat&logo=reactquery&logoColor=white" />
+	<img src="https://img.shields.io/badge/Styledcomponents-DB7093?style=flat&logo=Styledcomponents&logoColor=white" />
+	<img src="https://img.shields.io/badge/json server-000000?style=flat&logo=json&logoColor=white" />
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+</div>
 
-### `yarn eject`
+<br>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 배포주소/Figma주소
+[배포주소](https://blue-sea-turtle-toy.vercel.app/)<br />
+[Figma주소](https://www.figma.com/file/0uvH7ucn2Ba32K2FwUp4Lv/Untitled?type=design&node-id=0%3A1&mode=design&t=tlN8oeh8Kb8T9lh7-1)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## API Table
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+| Number | Method | URL                                   | Description     | Request                                                      | Response                                                     |
+| ------ | ------ | ------------------------------------- | --------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1      | `POST` | /api/post                             | 게시글 등록          | {'id' : 게시글id, 'password' : 게시글 password, 'contents' : 게시글 내용} |                                                    |
+| 2      | `Delete` | /api/post/id                        | 게시글 삭제        | {'id': 게시글id}                             |                                                             |
+| 3      | `GET` | /api/post                              | 게시글 리스트   |                               |  {'id' : 게시글id, 'contents' : 게시글 내용}                                                            |
 
-## Learn More
+<br>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 프로젝트 시연 영상<br>
+![KakaoTalk_20231027_221526505](https://github.com/kimseulgi-creator/blue_sea_turtle_toy/assets/78592995/2353fc09-88c2-48a9-b502-3b381219cc6e)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<br>
