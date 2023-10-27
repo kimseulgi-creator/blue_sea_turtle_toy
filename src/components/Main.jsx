@@ -38,7 +38,7 @@ export default Main;
 export const StSection = styled.section`
   position: relative;
   background: ${(props) => props.background};
-  height: 930px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
